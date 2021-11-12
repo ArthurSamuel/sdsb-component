@@ -17,17 +17,18 @@ export default function CardLogo(props: ICardLogo) {
       xs={24}
       sm={24}
       md={12}
-      lg={6}
+      lg={12}
       xl={6}
+      xxl={6}
       className="mb-24"
       style={{ cursor: "pointer" }}
     >
       <Card bordered={false} className="criclebox ">
         <div className="number">
           <Row align="middle" gutter={[24, 0]}>
-            <Col xs={18}>
+            <Col xs={16} xxl={18}>
               <span>{props.headerText}</span>
-              <Title level={3}>{props.content}</Title>
+              <Title level={4}>{props.content}</Title>
             </Col>
             <Col xs={6}>
               <div className="icon-box">{props.icon}</div>
