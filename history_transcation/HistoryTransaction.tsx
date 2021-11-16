@@ -8,9 +8,9 @@ export default function HistoryTransaction(props: IHistoryTransaction) {
     <Fragment>
       <Card
         style={{ marginBottom: 20 }}
-        bordered={false}
+        bordered={true}
         bodyStyle={{ paddingTop: 0 }}
-        className="header-solid h-full  ant-list-yes"
+        className="header-solid h-full  ant-list-yes criclebox"
         title={<h6 className="font-semibold m-0">Your Transactions</h6>}
       >
         {props.dataTranscation.map((item, index) => {
@@ -25,7 +25,7 @@ export default function HistoryTransaction(props: IHistoryTransaction) {
                 <List.Item>
                   <List.Item.Meta
                     avatar={
-                      <Avatar size="small" className={item.textclass}>
+                      <Avatar size="small" className={item.textclass} style={{ display: 'flex', alignItems: 'center' }}>
                         {item.avatar}
                       </Avatar>
                     }
@@ -41,7 +41,7 @@ export default function HistoryTransaction(props: IHistoryTransaction) {
           );
         })}
       </Card>
-      <div style={{display: 'flex', justifyContent: 'center', marginBottom: 20}}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20 }}>
         <Pagination defaultCurrent={1} total={50} />
       </div>
     </Fragment>
