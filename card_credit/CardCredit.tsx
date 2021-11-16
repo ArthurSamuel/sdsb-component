@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "antd/lib/card";
-import { MoneyCollectOutlined } from "@ant-design/icons";
+import { CreditCardFilled } from "@ant-design/icons";
+import "./CardCredit.css"
 
 interface ICardCredit {
   memberCode: string;
@@ -10,16 +11,21 @@ interface ICardCredit {
 export default function CardCredit(props:ICardCredit) {
   return (
     <Card
-      title={<MoneyCollectOutlined></MoneyCollectOutlined>}
+      style={{borderRadius: 10}}
+      title={<CreditCardFilled style={{fontSize: 35}}></CreditCardFilled>}
       bordered={false}
-      className="card-credit header-solid h-ful"
+      className="card-credit header-solid h-ful card-credit-background-card"
     >
-      <div>Kode Member</div>
-      <h5 className="card-number">{props.memberCode}</h5>
+      <div>Saldo</div>
+      <h4 className="card-number" style={{fontSize: 26}}>10.000.000</h4>
       <div className="card-footer">
         <div className="mr-30">
           <p>Nama User</p>
           <h6>{props.userName}</h6>
+        </div>
+        <div className="mr-30">
+          <p>Kode Member</p>
+          <h6>{props.memberCode}</h6>
         </div>
       </div>
     </Card>
