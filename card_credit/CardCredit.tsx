@@ -1,14 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "antd/lib/card";
 import { CreditCardFilled } from "@ant-design/icons";
+import CardCreditService from './service/CardCreditService'
 import "./CardCredit.css"
-
 interface ICardCredit {
   memberCode: string;
   userName: string;
 }
 
 export default function CardCredit(props:ICardCredit) {
+  const Service = new CardCreditService()
+  const [credit, setCredit] = useState<string>('Rp ...')
+
+  useEffect(() => {
+    getCredit()
+  },[])
+
+  async function getCredit() {
+    const results = await Service.GetCredit()
+    let temp = `Rp ${results.data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+    setCredit(temp)
+  }
+
   return (
     <Card
       style={{borderRadius: 10}}
@@ -17,7 +30,9 @@ export default function CardCredit(props:ICardCredit) {
       className="card-credit header-solid h-ful card-credit-background-card"
     >
       <div>Saldo</div>
-      <h4 className="card-number" style={{fontSize: 26}}>10.000.000</h4>
+      <h4 className="card-number" style={{fontSize: 26}}>
+        {credit}
+      </h4>
       <div className="card-footer">
         <div className="mr-30">
           <p>Nama User</p>
