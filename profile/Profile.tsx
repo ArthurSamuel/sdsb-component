@@ -1,17 +1,30 @@
-import React from "react";
-import { Card, Descriptions, Typography } from "antd";
-import { useHistory } from "react-router";
-
-
+import React, { useEffect, useState } from "react";
+import { Card, Descriptions } from "antd";
+import ProfileService from './service/ProfileService'
 interface IProfile {
   memberCode: string;
   username: string;
   name: string;
+  onChangePassword: Function;
+  onChangePIN: Function;
 }
 
 export default function ProfileComponent(props: IProfile) {
-  const { Title } = Typography;
-  const history = useHistory()
+  const Service = new ProfileService()
+  const [kode, setKode] = useState('...')
+  const [username, setUsername] = useState('...')
+  const [name, setName] = useState('...')
+
+  useEffect(() => {
+    getProfile()
+  },[])
+
+  async function getProfile() {
+    const results = await Service.GetProfile()
+    setKode(results.data.member.code)
+    setName(results.data.name)
+    setUsername(results.data.username)
+  }
 
   return (
     <Card
@@ -22,20 +35,28 @@ export default function ProfileComponent(props: IProfile) {
     >
       <Descriptions>
         <Descriptions.Item label="Kode Member" span={3}>
-          {props.memberCode}
+          {kode}
         </Descriptions.Item>
         <Descriptions.Item label="Username" span={3}>
-          {props.username}
+          {username}
         </Descriptions.Item>
         <Descriptions.Item label="Nama" span={3}>
-          {props.name}
+          {name}
         </Descriptions.Item>
         <Descriptions.Item label="Password" span={3}>
           <span
-            onClick={() => history.push('/password-reset')}
+            onClick={() => props.onChangePassword()}
             style={{ color: "#3498db", cursor: "pointer", fontWeight: "bold" }}
           >
             Change Password
+          </span>
+        </Descriptions.Item>
+        <Descriptions.Item label="PIN" span={3}>
+          <span
+            onClick={() => props.onChangePIN()}
+            style={{ color: "#3498db", cursor: "pointer", fontWeight: "bold" }}
+          >
+            Change PIN
           </span>
         </Descriptions.Item>
       </Descriptions>
