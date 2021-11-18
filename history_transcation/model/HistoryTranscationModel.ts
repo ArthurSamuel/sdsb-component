@@ -3,15 +3,11 @@ export interface ITranscation {
   title: string;
   description: string;
   amount: string;
-  textclass: string;
-  amountcolor: string;
+  textclass: 'text-fill' | 'text-light-danger';
+  amountcolor: 'text-success' | 'text-danger';
+  date: string;
 }
-
 export interface ITransactionGroup {
   data: ITranscation[];
   date: string;
-}
-
-export interface IHistoryTransaction {
-  dataTranscation: ITransactionGroup[];
 }
