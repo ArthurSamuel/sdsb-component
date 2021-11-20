@@ -1,3 +1,5 @@
+import { IMember } from "../../models/Member";
+
 interface IGiver {
   id: number;
   username: string;
@@ -20,7 +22,7 @@ interface IGiver {
 
 interface IData {
   id: number;
-  member_id: number;
+  member_id: string;
   wallet_type: string;
   type: string;
   date: string;
@@ -37,6 +39,7 @@ interface IData {
   updated_at: string;
   deleted_at: string;
   giver: IGiver;
+  member: IMember;
 }
 
 interface IDataParent {
