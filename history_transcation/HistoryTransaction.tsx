@@ -7,7 +7,11 @@ import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import { FromStringToDate, CreditToString } from "../../../utils/Helper";
 import Spinner from "../spinner/Spinner";
 
-export default function HistoryTransaction() {
+interface IHistoryTransaction {
+  idMember: string;
+}
+
+export default function HistoryTransaction(props: IHistoryTransaction) {
   const Service = new HistoryTransactionService();
   const [data, setData] = useState<ITransactionGroup[] | null>(null);
   const [totalPage, setTotalPage] = useState<number>();
@@ -22,28 +26,30 @@ export default function HistoryTransaction() {
     setTotalPage(results.data.total);
     let temp: ITransactionGroup[] = [];
     results.data.data.forEach((item) => {
+      let tempProcessAmount = parseInt(item.amount);
+      let tempTitle =
+        item.reference_type === "gift"
+          ? `Gift From ${item.giver.name}`
+          : `Transfer To ${item.member.name}`;
+      if (
+        item.reference_type === "transfer" &&
+        item.member_id === props.idMember
+      ) {
+        tempProcessAmount = tempProcessAmount * -1;
+        tempTitle = `Transfer From ${item.giver.name}`;
+      }
       temp.push({
         date: item.date,
         data: [
           {
-            title:
-              item.reference_type === "gift"
-                ? `Gift From ${item.giver.name}`
-                : `Transfer To ${item.giver.name}`,
-            amount: CreditToString(item.amount),
-            amountcolor:
-              item.reference_type === "gift" ? "text-success" : "text-danger",
+            title: tempTitle,
+            amount: CreditToString(tempProcessAmount.toString()),
+            amountcolor: tempProcessAmount > 0 ? "text-success" : "text-danger",
             avatar:
-              item.reference_type === "gift" ? (
-                <PlusOutlined />
-              ) : (
-                <MinusOutlined />
-              ),
+              tempProcessAmount > 0 ? <PlusOutlined /> : <MinusOutlined />,
             description: item.description,
             textclass:
-              item.reference_type === "gift"
-                ? "text-fill"
-                : "text-light-danger",
+              tempProcessAmount > 0 ? "text-fill" : "text-light-danger",
             date: FromStringToDate(item.date),
           },
         ],
@@ -56,8 +62,16 @@ export default function HistoryTransaction() {
     return <Spinner></Spinner>;
   }
 
+  if (data.length === 0) {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
+        <h3>Tidak ada data transaksi</h3>
+      </div>
+    );
+  }
+
   return (
-    <Fragment>
+    <div>
       <Card
         style={{ marginBottom: 20 }}
         bordered={true}
@@ -110,6 +124,6 @@ export default function HistoryTransaction() {
           total={totalPage}
         />
       </div>
-    </Fragment>
+    </div>
   );
 }
