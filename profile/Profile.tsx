@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Card, Descriptions } from "antd";
 import ProfileService from './service/ProfileService'
 interface IProfile {
-  memberCode: string;
-  username: string;
-  name: string;
   onChangePassword: Function;
   onChangePIN: Function;
 }
