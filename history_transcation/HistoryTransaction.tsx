@@ -9,6 +9,8 @@ import Spinner from "../spinner/Spinner";
 
 interface IHistoryTransaction {
   idMember: string;
+  fetchAgain?: boolean;
+  onFetchAgain?: Function;
 }
 
 export default function HistoryTransaction(props: IHistoryTransaction) {
@@ -20,6 +22,17 @@ export default function HistoryTransaction(props: IHistoryTransaction) {
   useEffect(() => {
     getHistoryData();
   }, [currentPage]);
+
+  useEffect(() => {
+    fetchAgain()
+  },[props])
+
+  async function fetchAgain() {
+    if (props.fetchAgain && props.onFetchAgain) {
+      await getHistoryData()
+      props.onFetchAgain()
+    }
+  }
 
   async function getHistoryData() {
     const results = await Service.GetHistory(currentPage);
@@ -59,7 +72,7 @@ export default function HistoryTransaction(props: IHistoryTransaction) {
   }
 
   if (!data) {
-    return <Spinner></Spinner>;
+    return <Spinner marginTop={40}></Spinner>;
   }
 
   if (data.length === 0) {
