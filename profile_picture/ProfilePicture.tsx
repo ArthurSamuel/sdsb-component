@@ -56,10 +56,9 @@ export default function ProfilePicture(props: IProfilePicture) {
       parseInt(props.phone),
       file
     );
-    props.onUpdateImage(results.data.email)
+    //console.log(results.data.member.profile_image);
+    props.onUpdateImage(results.data.member.profile_image)
   }
-
-  console.log(`${Server.baseProd}/public/${props.avatarUrl}`);
 
   return (
     <section>
@@ -81,7 +80,7 @@ export default function ProfilePicture(props: IProfilePicture) {
                     props.avatarUrl ? (
                       `${Server.baseProd}/public/${props.avatarUrl}`
                     ) : (
-                      <UserOutlined style={{ color: "red", fontSize: 40 }} />
+                      <UserOutlined style={{ color: "#dedede", fontSize: 40 }} />
                     )
                   }
                 />
