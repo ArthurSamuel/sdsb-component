@@ -20,18 +20,25 @@ export default function CardLogo(props: ICardLogo) {
       lg={12}
       xl={6}
       xxl={6}
-      className="mb-24"
-      style={{ cursor: "pointer" }}
-    >
-      <Card bordered={false} className="criclebox ">
-        <div className="number">
-          <Row align="middle" gutter={[24, 0]}>
+      className='mb-24'
+      style={{ cursor: "pointer" }}>
+      <Card bordered={false} className='criclebox '>
+        <div className='number'>
+          <Row align='middle' gutter={[24, 0]}>
             <Col xs={16} xxl={18}>
               <span>{props.headerText}</span>
               <Title level={4}>{props.content}</Title>
             </Col>
             <Col xs={6}>
-              <div className="icon-box">{props.icon}</div>
+              <div
+                className="icon-box"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}>
+                {props.icon}
+              </div>
             </Col>
           </Row>
         </div>
