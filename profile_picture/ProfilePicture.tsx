@@ -49,14 +49,14 @@ export default function ProfilePicture(props: IProfilePicture) {
   }
 
   async function onChangeFile(e: any) {
-    const file = e.target.files;
+    const file = e.target.files[0];
     const results = await Service.EditProfilePicture(
       props.name,
       props.email,
-      parseInt(props.phone),
+      props.phone,
       file
     );
-    //console.log(results.data.member.profile_image);
+    console.log(results.data.member.profile_image);
     props.onUpdateImage(results.data.member.profile_image)
   }
 
@@ -78,7 +78,7 @@ export default function ProfilePicture(props: IProfilePicture) {
                   shape='square'
                   src={
                     props.avatarUrl ? (
-                      `${Server.baseProd}/public/${props.avatarUrl}`
+                      `${Server.baseProd}/${props.avatarUrl}`
                     ) : (
                       <UserOutlined style={{ color: "#dedede", fontSize: 40 }} />
                     )

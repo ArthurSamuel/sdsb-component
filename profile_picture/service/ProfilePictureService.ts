@@ -5,7 +5,7 @@ export default class ProfilePictureService {
   public async EditProfilePicture(
     nama: string,
     email: string,
-    phone: number,
+    phone: string,
     image: any
   ): Promise<IProfilePictureModel> {
     const results = await Request({
@@ -15,7 +15,7 @@ export default class ProfilePictureService {
         nama,
         email,
         no_telepon: phone,
-        image,
+        profile_image: image,
       },
     });
     return results;
