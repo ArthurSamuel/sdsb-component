@@ -90,7 +90,7 @@ export default function HistoryTransaction(props: IHistoryTransaction) {
         bordered={true}
         bodyStyle={{ paddingTop: 0 }}
         className="header-solid h-full  ant-list-yes criclebox"
-        title={<h6 className="font-semibold m-0">Your Transactions</h6>}
+        title={<h6 className="font-semibold m-0">Transaksi Anda</h6>}
       >
         {data.map((item, index) => {
           return (
