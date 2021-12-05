@@ -42,7 +42,7 @@ export default function HistoryTransaction(props: IHistoryTransaction) {
       let tempProcessAmount = parseInt(item.amount);
       let tempTitle =
         item.reference_type === "gift"
-          ? `Gift From ${item.giver.name}`
+          ? item.giver ? `Gift From ${item.giver.name}` : 'Bonus'
           : `Transfer To ${item.member.name}`;
       if (
         item.reference_type === "transfer" &&
