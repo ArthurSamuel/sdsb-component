@@ -27,7 +27,7 @@ export default function CardLogo(props: ICardLogo) {
           <Row align='middle' gutter={[24, 0]}>
             <Col xs={16} xxl={18}>
               <span>{props.headerText}</span>
-              <Title level={4}>{props.content}</Title>
+              <Title level={5}>{props.content}</Title>
             </Col>
             <Col xs={6}>
               <div
