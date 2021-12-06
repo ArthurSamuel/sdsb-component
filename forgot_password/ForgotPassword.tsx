@@ -26,7 +26,7 @@ export default function ForgotPassword(props: IForgotPassword) {
         setIsFetch(false);
         const msg =
         results.statusCode === 200
-            ? "Berhasil memproses perubahan password"
+            ? "Silahkan Periksa Email Untuk Reset Password"
             : results.error_message;
         notification.info({
           message: msg,
