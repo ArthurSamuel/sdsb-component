@@ -36,7 +36,7 @@ export default function InputMoney(props: IInputMoney) {
 
   return (
     <Fragment>
-      <div style={{ width: 150, marginBottom: 10 }}>
+      <div style={{ width: '100%', marginBottom: 10 }}>
         <span style={{ fontSize: 15, fontWeight: "bold" }}>
           {props.label}
         </span>

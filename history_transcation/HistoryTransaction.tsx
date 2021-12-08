@@ -60,7 +60,7 @@ export default function HistoryTransaction(props: IHistoryTransaction) {
             amountcolor: tempProcessAmount > 0 ? "text-success" : "text-danger",
             avatar:
               tempProcessAmount > 0 ? <PlusOutlined /> : <MinusOutlined />,
-            description: item.description,
+            description: item.description.toLowerCase() === 'undefined' ? '' : item.description,
             textclass:
               tempProcessAmount > 0 ? "text-fill" : "text-light-danger",
             date: FromStringToDate(item.date),
