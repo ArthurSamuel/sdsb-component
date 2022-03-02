@@ -4,7 +4,11 @@ import { Avatar, List, Pagination } from "antd";
 import { ITransactionGroup } from "./model/HistoryTranscationModel";
 import { HistoryTransactionService } from "./service/HistoryTransactionService";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
-import { FromStringToDate, CreditToString } from "../../../utils/Helper";
+import {
+  FromStringToDate,
+  CreditToString,
+  ToMoneyFormat,
+} from "../../../utils/Helper";
 import Spinner from "../spinner/Spinner";
 
 interface IHistoryTransaction {
@@ -24,13 +28,13 @@ export default function HistoryTransaction(props: IHistoryTransaction) {
   }, [currentPage]);
 
   useEffect(() => {
-    fetchAgain()
-  },[props])
+    fetchAgain();
+  }, [props]);
 
   async function fetchAgain() {
     if (props.fetchAgain && props.onFetchAgain) {
-      await getHistoryData()
-      props.onFetchAgain()
+      await getHistoryData();
+      props.onFetchAgain();
     }
   }
 
@@ -42,7 +46,9 @@ export default function HistoryTransaction(props: IHistoryTransaction) {
       let tempProcessAmount = parseInt(item.amount);
       let tempTitle =
         item.reference_type === "gift"
-          ? item.giver ? `Gift From ${item.giver.name}` : 'Bonus'
+          ? item.giver
+            ? `Gift From ${item.giver.name}`
+            : "Bonus"
           : `Transfer To ${item.member.name}`;
       if (
         item.reference_type === "transfer" &&
@@ -60,7 +66,14 @@ export default function HistoryTransaction(props: IHistoryTransaction) {
             amountcolor: tempProcessAmount > 0 ? "text-success" : "text-danger",
             avatar:
               tempProcessAmount > 0 ? <PlusOutlined /> : <MinusOutlined />,
-            description: item.description.toLowerCase() === 'undefined' ? '' : item.description,
+            description:
+              item.member.name === "parkir user"
+                ? `Total Pembayaran: ${ToMoneyFormat(
+                    tempProcessAmount * -1
+                  )} Sisa Pembayaran : 0`
+                : item.description.toLowerCase() === "undefined"
+                ? ""
+                : item.description,
             textclass:
               tempProcessAmount > 0 ? "text-fill" : "text-light-danger",
             date: FromStringToDate(item.date),
@@ -89,25 +102,23 @@ export default function HistoryTransaction(props: IHistoryTransaction) {
         style={{ marginBottom: 20 }}
         bordered={true}
         bodyStyle={{ paddingTop: 0 }}
-        className="header-solid h-full  ant-list-yes criclebox"
-        title={<h6 className="font-semibold m-0">Transaksi Anda</h6>}
-      >
+        className='header-solid h-full  ant-list-yes criclebox'
+        title={<h6 className='font-semibold m-0'>Transaksi Anda</h6>}>
         {data.map((item, index) => {
           return (
             <List
               key={index}
-              className="transactions-list ant-newest"
-              itemLayout="horizontal"
+              className='transactions-list ant-newest'
+              itemLayout='horizontal'
               dataSource={item.data}
               renderItem={(item) => (
                 <List.Item>
                   <List.Item.Meta
                     avatar={
                       <Avatar
-                        size="small"
+                        size='small'
                         className={item.textclass}
-                        style={{ display: "flex", alignItems: "center" }}
-                      >
+                        style={{ display: "flex", alignItems: "center" }}>
                         {item.avatar}
                       </Avatar>
                     }
@@ -119,7 +130,7 @@ export default function HistoryTransaction(props: IHistoryTransaction) {
                       </div>
                     }
                   />
-                  <div className="amount">
+                  <div className='amount'>
                     <span className={item.amountcolor}>{item.amount}</span>
                   </div>
                 </List.Item>
@@ -129,8 +140,7 @@ export default function HistoryTransaction(props: IHistoryTransaction) {
         })}
       </Card>
       <div
-        style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}
-      >
+        style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
         <Pagination
           onChange={(e) => setCurrentPage(e)}
           defaultCurrent={currentPage}
